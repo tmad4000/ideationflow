@@ -1,0 +1,22 @@
+<head>
+  <title>ideationflow</title>
+</head>
+
+<body>
+	<div class="site-title"><span>T</span></div>
+  {{> input}}
+
+</body>
+
+<template name="input">
+  <div id="input" contenteditable="true"><a href="#">@meteor</a> way to deploy experimental versions on different subdomains</div>
+  <!-- <div class="omnibox">Put up a list of parcels on this website so people don't have to hang round the pledge on the wrong days</div> -->
+</template>
+
+<template name="output">
+	<div class="output">
+		{{#each suggestion}}
+			<div class="suggestion">{{title}}</div>
+		{{/each}}
+	</div>
+</template>
