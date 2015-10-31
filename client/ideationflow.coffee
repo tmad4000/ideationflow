@@ -1,34 +1,32 @@
+Template.nav.events
+	'click .site-title': (e) ->
+		$('#submit').val('').focus()
+
 Template.input.onRendered ->
-	setEndOfContenteditable(document.getElementById('input'))
+	$(document).keydown (e) ->
+		return if e.target.nodeName.toLowerCase() == 'input'
+		if 48 <= e.which <= 90 and not e.metaKey and not e.altKey and not e.ctrlKey
+			$('#submit').focus()
 
 Template.input.events
 	'keydown #input': (e) ->
 		if e.which is 13
-			console.log 'submit!'
+			Suggestions.insert
+				title: $('#submit').val()
+				time: Date.now()
+			$('#submit').val('').blur()
 
+Template.output.helpers
+	suggestions: ->
+		suggestions = Suggestions.find({}, {sort: {time: -1}}).fetch()
+		if suggestions.length is 0
+			return [{title: 'Be the first to make a suggestion!'}]
+		else
+			return suggestions
 
-@setEndOfContenteditable = (contentEditableElement) ->
-  range = undefined
-  selection = undefined
-  if document.createRange
-    range = document.createRange()
-    #Create a range (a range is a like the selection but invisible)
-    range.selectNodeContents contentEditableElement
-    #Select the entire contents of the element with the range
-    range.collapse false
-    #collapse the range to the end point. false means collapse to end rather than the start
-    selection = window.getSelection()
-    #get the selection object (allows you to change selection)
-    selection.removeAllRanges()
-    #remove any selections already made
-    selection.addRange range
-    #make the range you have just created the visible selection
-  else if document.selection
-    range = document.body.createTextRange()
-    #Create a range (a range is a like the selection but invisible)
-    range.moveToElementText contentEditableElement
-    #Select the entire contents of the element with the range
-    range.collapse false
-    #collapse the range to the end point. false means collapse to end rather than the start
-    range.select()
-    #Select the range (make it the visible selection
+Template.output.events
+	'click .js-clearSuggestion': ->
+		Meteor.call 'clearSuggestions', @
+
+	'click .js-clearSuggestions': ->
+		Meteor.call 'clearSuggestions', {}

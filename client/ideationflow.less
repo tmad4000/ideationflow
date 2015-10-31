@@ -1,17 +1,42 @@
 body {
 	font-family: sans-serif;
+	box-sizing: border-box;
+	background-color: #f8f8f8;
 }
 
 div {
-	border: 1px solid black;
+	background: rgba(0, 0, 0, 0.05);
+}
+
+.bordered {
+	// border: 1px solid black;
+	border-radius: 2px;
 }
 
 #input {
 	margin: 0 auto;
 	margin-top: 50px;
 	width: 85%;
-	padding: 6px;
+}
+
+#output {
+	margin: 0 auto;
+	margin-top: 50px;
+	width: 85%;
+	padding: 3px;
+}
+
+#submit {
+	width: 100%;
 	font-size: 48px;
+	font-weight: 300;
+	padding: 6px;
+	box-sizing: border-box;
+}
+
+//override default input border
+input {
+	border: none;
 }
 
 .site-title {
@@ -22,4 +47,45 @@ div {
 		position: relative;
 		top: 2px;
 	}
+	cursor: pointer;
+	background: #838383;
+	color: #fff;
+	&:hover {
+		background: darken(#838383, 10%);
+	}
+}
+
+.output-title {
+	display: block;
+	margin: 6px;
+	padding: 6px;
+}
+
+.delete {
+	visibility: hidden;
+	color: rgba(256, 0, 0, 0.5);
+	float: right;
+}
+
+.suggestion {
+	margin: 6px;
+	padding: 6px;
+	&:hover {
+		.delete {
+			visibility: visible;
+		}
+	}
+	cursor: pointer;
+}
+
+.button {
+	border: 1px solid black;
+	cursor: pointer;
+	padding: 3px;
+}
+
+.footer {
+	position: fixed;
+	bottom: 6px;
+	left: 6px;
 }

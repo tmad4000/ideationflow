@@ -3,20 +3,27 @@
 </head>
 
 <body>
-	<div class="site-title"><span>T</span></div>
+	{{> nav}}
   {{> input}}
-
+  {{> output}}
 </body>
 
+<template name="nav">
+	<div class="site-title"><span>T</span></div>
+</template>
+
 <template name="input">
-  <div id="input" contenteditable="true"><a href="#">@meteor</a> way to deploy experimental versions on different subdomains</div>
-  <!-- <div class="omnibox">Put up a list of parcels on this website so people don't have to hang round the pledge on the wrong days</div> -->
+	<div id="input">
+  	<input type="text" id="submit" class="bordered" value="{{value}}" placeholder="suggest an idea to improve your school" autofocus/>
+  </div>
 </template>
 
 <template name="output">
-	<div class="output">
-		{{#each suggestion}}
-			<div class="suggestion">{{title}}</div>
+	<div id="output" class="bordered">
+		<span class="output-title">ur suggestions:</span>
+		{{#each suggestions}}
+			<div class="suggestion bordered js-clearSuggestion">{{{title}}} <span class="delete">delete</span></div>
 		{{/each}}
 	</div>
+	<div class="footer button js-clearSuggestions">clear</div>
 </template>
