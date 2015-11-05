@@ -1,3 +1,3 @@
 Meteor.methods
-	'clearSuggestions': (filter) ->
-		Suggestions.remove(filter)
+	'clearSuggestions': (selector) ->
+		Suggestions.remove(selector)

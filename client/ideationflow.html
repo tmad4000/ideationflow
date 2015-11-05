@@ -14,16 +14,31 @@
 
 <template name="input">
 	<div id="input">
-  	<input type="text" id="submit" class="bordered" value="{{value}}" placeholder="suggest an idea to improve your school" autofocus/>
+  	<input type="text" id="submit" value="{{value}}"/>
   </div>
 </template>
 
 <template name="output">
-	<div id="output" class="bordered">
-		<span class="output-title">ur suggestions:</span>
+	<div id="output" class="pane">
+		<div class="output-title">...</div>
 		{{#each suggestions}}
-			<div class="suggestion bordered js-clearSuggestion">{{{title}}} <span class="delete">delete</span></div>
+			<div class="suggestion pane js-openSuggestion">
+				<div class="suggestion-rating pane">
+				</div>
+				<div class="suggestion-info">
+					<span class="suggestion-title">{{title}}</span>
+				</div>
+				<div class="suggestion-meta">
+					<div class="suggestion-author">by {{author}}</div>
+					<div class="suggestion-timestamp">{{#if time}}{{livestamp time}}{{/if}}</div>
+				</div>
+			</div>
+		{{else}}
+			<div class="suggestion pane">*crickets*</div>
 		{{/each}}
 	</div>
-	<div class="footer button js-clearSuggestions">clear</div>
+	<div class="footer">
+		<div class="button js-clearSuggestions">clearSuggestions</div>
+		<div class="button js-nextPlaceholderPrompt">nextPlaceholderPrompt</div>
+	</div>
 </template>
