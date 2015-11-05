@@ -1,34 +1,55 @@
+Template.nav.events
+	'click .site-title': ->
+		FlowRouter.go '/'
+
 Template.input.onRendered ->
-	setEndOfContenteditable(document.getElementById('input'))
+	$(document).keydown (e) ->
+		return if e.target.nodeName.toLowerCase() == 'input'
+		if 48 <= e.which <= 90 and not e.metaKey and not e.altKey and not e.ctrlKey
+			$('#submit').focus()
+	Placeprompter $("#submit"), prompts
+
+Template.input.helpers
+	placeholder: ->
+		Session.get 'placeholder'
 
 Template.input.events
 	'keydown #input': (e) ->
 		if e.which is 13
-			console.log 'submit!'
+			Suggestions.insert
+				title: $('#submit').val()
+				author: 'Anonymous'
+				time: Date.now()
+			$('#submit').val('').blur()
 
+Template.output.onCreated ->
+	@autorun ->
+		FlowRouter.watchPathChange()
+		selector =
+			_id: FlowRouter.getParam('_id')
+		Session.set 'selector', selector
 
-@setEndOfContenteditable = (contentEditableElement) ->
-  range = undefined
-  selection = undefined
-  if document.createRange
-    range = document.createRange()
-    #Create a range (a range is a like the selection but invisible)
-    range.selectNodeContents contentEditableElement
-    #Select the entire contents of the element with the range
-    range.collapse false
-    #collapse the range to the end point. false means collapse to end rather than the start
-    selection = window.getSelection()
-    #get the selection object (allows you to change selection)
-    selection.removeAllRanges()
-    #remove any selections already made
-    selection.addRange range
-    #make the range you have just created the visible selection
-  else if document.selection
-    range = document.body.createTextRange()
-    #Create a range (a range is a like the selection but invisible)
-    range.moveToElementText contentEditableElement
-    #Select the entire contents of the element with the range
-    range.collapse false
-    #collapse the range to the end point. false means collapse to end rather than the start
-    range.select()
-    #Select the range (make it the visible selection
+Template.output.helpers
+	suggestions: ->
+		Suggestions.find Session.get('selector'), {sort: {time: -1}}
+
+Template.output.events
+	'click .js-openSuggestion': ->
+		FlowRouter.go '/thought/:_id', {_id: @_id}
+
+	'click .js-clearSuggestions': ->
+		Meteor.call 'clearSuggestions', {}
+
+	'click .js-nextPlaceholderPrompt': ->
+		$('#submit').trigger('placeprompter:nextPlaceholder')
+
+@prompts = [
+	"there should be a way to...",
+	"it'd be awesome if...",
+	"we could improve...",
+	"it's frustrating that...",
+	"it'd be better if...",
+	"it's inconvenient when...",
+	"more people should...",
+	"we shouldn't be..."
+]

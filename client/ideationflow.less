@@ -1,17 +1,12 @@
 body {
 	font-family: sans-serif;
+	box-sizing: border-box;
+	background-color: #f8f8f8;
 }
 
-div {
-	border: 1px solid black;
-}
-
-#input {
-	margin: 0 auto;
-	margin-top: 50px;
-	width: 85%;
-	padding: 6px;
-	font-size: 48px;
+.pane {
+	border-radius: 2px;
+	background: rgba(0, 0, 0, 0.05);
 }
 
 .site-title {
@@ -20,6 +15,125 @@ div {
 	text-align: center;
 	span {
 		position: relative;
-		top: 2px;
+		top: 1px;
 	}
+	cursor: pointer;
+	background: #838383;
+	color: #fff;
+	&:hover {
+		background: darken(#838383, 10%);
+	}
+}
+
+#input {
+	position: relative;
+	box-sizing: border-box;
+	margin: 36px;
+	&:before {
+		content: 'i think';
+		position: absolute;
+		top: 1px;
+		left: 1px;
+		padding: 6px 12px;
+		font-size: 36px;
+		font-weight: 500;
+		box-sizing: border-box;
+	}
+}
+
+//override default input border
+input {
+	border: none;
+}
+
+#submit {
+	width: 100%;
+	font-size: 36px;
+	font-weight: 300;
+	padding: 6px;
+	padding-left: 120px;
+	box-sizing: border-box;
+	color: darken(#fff, 40%);
+	border-radius: 2px;
+	&:focus {
+		color: inherit;
+	}
+}
+
+#output {
+	margin: 0 36px;
+	padding: 1px;
+}
+
+.output-title {
+	display: block;
+	margin: 6px;
+	font-size: 24px;
+	text-align: right;
+}
+
+.suggestion {
+	box-sizing: border-box;
+	position: relative;
+	padding: 6px;
+	margin: 6px;
+	font-size: 14px;
+	display: block;
+	overflow: hidden;
+	cursor: pointer;
+	transition: background 0.5s ease;
+	&:hover {
+		background: rgba(0, 0, 0, 0.08);
+	}
+	&:active {
+		background: rgba(0, 0, 0, 0.04);
+	}
+}
+
+.suggestion-rating {
+	float: left;
+	width: 28px;
+	height: 28px;
+	margin-right: 6px;
+}
+
+.suggestion-info {
+	float: left;
+	width: auto;
+	.suggestion-title {
+		font-size: 14px;
+		line-height: 14px;
+	}
+}
+
+.suggestion-meta {
+	position: relative;
+	float: right;
+	margin-left: 6px;
+	.suggestion-author {
+		font-size: 12px;
+		line-height: 16px;
+		text-align: right;
+	}
+	.suggestion-timestamp {
+		font-size: 10px;
+		line-height: 12px;
+		text-align: right;
+		color: #838383;
+	}
+}
+
+.button {
+	border: 1px solid black;
+	cursor: pointer;
+	padding: 3px;
+	float: left;
+	margin-left: 6px;
+}
+
+.footer {
+	font-size: 12px;
+	position: fixed;
+	bottom: 6px;
+	left: 0;
 }
